@@ -50,15 +50,16 @@ class BodyWithFeet:
 
     MODE = {
         'performance': {
-            'det': 'https://download.openmmlab.com/mmpose/v1/projects/rtmposev1/onnx_sdk/yolox_x_8xb8-300e_humanart-a39d44ed.zip',
+            # 'det': 'https://download.openmmlab.com/mmpose/v1/projects/rtmposev1/onnx_sdk/yolox_x_8xb8-300e_humanart-a39d44ed.zip',
+            'det': 'file:///home/ubuntu/MyFiles/projects/TalkingHead/ckpts/rtmlib/hub/checkpoints/yolox_x_8xb8-300e_humanart-a39d44ed.onnx',
             'det_input_size': (640, 640),
-            'pose': 'https://download.openmmlab.com/mmpose/v1/projects/rtmposev1/onnx_sdk/rtmpose-x_simcc-body7_pt-body7-halpe26_700e-384x288-7fb6e239_20230606.zip',
+            'pose': 'file:///home/ubuntu/MyFiles/projects/TalkingHead/ckpts/rtmlib/hub/checkpoints/rtmpose-x_simcc-body7_pt-body7-halpe26_700e-384x288-7fb6e239_20230606.onnx',
             'pose_input_size': (288, 384),
         },
         'lightweight': {
-            'det': 'https://download.openmmlab.com/mmpose/v1/projects/rtmposev1/onnx_sdk/yolox_tiny_8xb8-300e_humanart-6f3252f9.zip',
+            'det': 'file:///home/ubuntu/MyFiles/projects/TalkingHead/ckpts/rtmlib/hub/checkpoints/yolox_tiny_8xb8-300e_humanart-6f3252f9.onnx',
             'det_input_size': (416, 416),
-            'pose': 'https://download.openmmlab.com/mmpose/v1/projects/rtmposev1/onnx_sdk/rtmpose-s_simcc-body7_pt-body7-halpe26_700e-256x192-7f134165_20230605.zip',
+            'pose': 'file:///home/ubuntu/MyFiles/projects/TalkingHead/ckpts/rtmlib/hub/checkpoints/rtmpose-s_simcc-body7_pt-body7-halpe26_700e-256x192-7f134165_20230605.onnx',
             'pose_input_size': (192, 256),
         },
         'balanced': {
@@ -125,4 +126,4 @@ class BodyWithFeet:
         """
         bboxes = self.det_model(image)
         keypoints, scores = self.pose_model(image, bboxes=bboxes)
-        return keypoints, scores
+        return keypoints, scores, bboxes

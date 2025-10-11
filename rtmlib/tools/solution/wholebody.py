@@ -53,10 +53,10 @@ class Wholebody:
     MODE = {
         'performance': {
             'det':
-            'https://download.openmmlab.com/mmpose/v1/projects/rtmposev1/onnx_sdk/yolox_m_8xb8-300e_humanart-c2c7a14a.zip',  # noqa
+            'file:///mnt/cfs/shanhai/fanruidi/projects/wan_lipsync/rtmlib/checkpoints/yolox_m_8xb8-300e_humanart-c2c7a14a.onnx',  # noqa
             'det_input_size': (640, 640),
             'pose':
-            'https://download.openmmlab.com/mmpose/v1/projects/rtmw/onnx_sdk/rtmw-dw-x-l_simcc-cocktail14_270e-384x288_20231122.zip',  # noqa
+            'file:///mnt/cfs/shanhai/fanruidi/projects/wan_lipsync/rtmlib/checkpoints/rtmw-dw-x-l_simcc-cocktail14_270e-384x288_20231122.onnx',  # noqa
             'pose_input_size': (288, 384),
         },
         'lightweight': {

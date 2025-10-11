@@ -143,7 +143,6 @@ class PoseTracker:
         self.track_ids_last_frame = []
 
     def __call__(self, image: np.ndarray):
-
         if self.frame_cnt % self.det_frequency == 0:
             bboxes = self.det_model(image)
         else:
