@@ -1,0 +1,3 @@
+[submodule "rtmlib_torch/tools/torch_trt_utils"]
+	path = rtmlib_torch/tools/torch_trt_utils
+	url = git@github.com:FasterProcess/torch_trt_utils.git
