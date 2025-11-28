@@ -60,10 +60,6 @@ class YOLOX(BaseTool):
         self.nms_thr = nms_thr
         self.score_thr = score_thr
 
-        if backend == "tensorrt":
-            self.nms_thr = torch.tensor(nms_thr, device=self.device)
-            self.score_thr = torch.tensor(score_thr, device=self.device)
-
     def __call__(self, image: torch.Tensor) -> torch.Tensor:
         image, ratio = self.preprocess(image)
         batch_size = image.shape[0]
@@ -136,10 +132,15 @@ class YOLOX(BaseTool):
 
         if len(outputs) < 1:
             return boxes_result, scores_result
+        
+        if isinstance(outputs[0], torch.Tensor) and not isinstance(self.nms_thr, torch.Tensor):
+            self.nms_thr = torch.tensor(self.nms_thr, device=outputs[0].device)
+            self.score_thr = torch.tensor(self.score_thr, device=outputs[0].device)      
 
         if outputs[0].shape[-1] == 85:
             for i in range(len(outputs)):
                 output = outputs[i]
+                device = output.device
                 grids = []
                 expanded_strides = []
                 strides = [8, 16, 32]
@@ -152,8 +153,8 @@ class YOLOX(BaseTool):
                     # 注意：torch.meshgrid 默认使用 'ij' 索引，而 numpy 使用 'xy' 索引
                     # 所以我们需要交换顺序或使用 indexing='ij'
                     yv, xv = torch.meshgrid(
-                        torch.arange(hsize, device=self.device),
-                        torch.arange(wsize, device=self.device),
+                        torch.arange(hsize, device=device),
+                        torch.arange(wsize, device=device),
                         indexing="ij",
                     )
 
@@ -164,7 +165,7 @@ class YOLOX(BaseTool):
                     # 创建与 grid 前两个维度相同的 expanded_strides
                     shape = grid.shape[:2]  # [1, H*W]
                     expanded_stride = torch.full(
-                        (*shape, 1), stride, device=self.device
+                        (*shape, 1), stride, device=device
                     )
                     expanded_strides.append(expanded_stride)
 

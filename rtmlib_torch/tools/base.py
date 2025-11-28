@@ -152,6 +152,9 @@ class BaseTool(metaclass=ABCMeta):
             outputs = self.session.Inference([input], output_type='torch')
 
         if len(outputs) >= 1 and isinstance(outputs[0], np.ndarray):
-            outputs = [torch.from_numpy(out).to(device) for out in outputs]      
+            outputs = [torch.from_numpy(out).to(device) for out in outputs]    
+
+        if len(outputs) >= 1 and isinstance(outputs[0], torch.Tensor) and outputs[0].device != device:
+            outputs = [out.to(device) for out in outputs]
 
         return outputs
